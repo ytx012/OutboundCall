@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
@@ -6,7 +6,6 @@ android {
 
 
     defaultConfig {
-        applicationId "com.ycyd.ytx.android.studentnetwork"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
@@ -15,7 +14,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-
+    lintOptions {
+        //设置编译的lint开关，程序在buid的时候，会执行lint检查，有任何的错误或者警告提示，都会终止构建
+        abortOnError false
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -28,12 +30,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'com.android.support:appcompat-v7:25.0.0'
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.squareup.okhttp3:okhttp:3.12.0"
-    implementation 'com.android.support:appcompat-v7:25.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(path: ':util')
 }
+
+task makeJar(type: Copy) {
+
+    //删除存在的
+    delete 'build/libs/ytxutil-1.0.0.jar'
+    //设置拷贝的文件
+    from('build/intermediates/bundles/release/')
+    //打进jar包后的文件目录
+    into('build/libs/')
+    //将classes.jar放入build/libs/目录下
+    //include ,exclude参数来设置过滤
+    //（我们只关心classes.jar这个文件）
+    include('classes.jar')
+    //重命名
+    rename('classes.jar', 'ytxutil-1.0.0.jar')
+}
+makeJar.dependsOn(build)

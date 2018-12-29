@@ -1,1 +1,1 @@
-include ':app', ':studentnetwork'
+include ':app', ':studentnetwork', ':util'

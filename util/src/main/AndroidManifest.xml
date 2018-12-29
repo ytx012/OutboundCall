@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ycyd.ytx.android.util">
+
+    <application>
+        <service
+            android:name=".DownloadService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".DownloadActivity"></activity>
+    </application>
+
+</manifest>
