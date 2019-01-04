@@ -3,6 +3,9 @@
     package="com.ycyd.ytx.android.outboundcall">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,11 +34,27 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="111.47.64.131"
-                    android:pathPrefix="/outboundcall" />
+                    android:pathPrefix="/outboundcall"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.ycyd.ytx.android.outboundcall.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+<!--
+authorities：app的包名.fileProvider
+grantUriPermissions：必须是true，表示授予 URI 临时访问权限
+exported：必须是false
+resource：中的@xml/file_paths是我们接下来要添加的文件
+-->
     </application>
 
 </manifest>
